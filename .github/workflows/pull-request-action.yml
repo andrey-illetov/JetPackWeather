@@ -18,9 +18,12 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Build with Gradle
+
+      - name: Run all test
+        run: ./gradlew test
+
+      - name: Show Build Info
         run: echo "This job is ${{ job.status }} on ${{github.ref}} in ${{ github.repository }} with ${{runner.os}}"
-      - name: Build debug apk
-        run: ./gradlew clean assembleDebug
