@@ -3,7 +3,7 @@ name: Android CI TAG
 on:
   push:
     tags:
-      - '*'
+      - 'AB-.*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +15,26 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Run all test
+        run: ./gradlew test
+
+      - name: Build debug APK and AAB after test
+        run: |
+                ./gradlew test
+                ./gradlew assembleDebug
+                ./gradlew bundleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug.apk
+          path: app/build/outputs/apk/release/app-debug.apk
 
       - name: Show Build Info
         run: echo "This job is ${{ job.status }} on ${{github.ref}} in ${{ github.repository }} with ${{runner.os}}"
