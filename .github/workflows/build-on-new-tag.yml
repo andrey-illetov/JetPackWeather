@@ -3,7 +3,7 @@ name: Android Build When added tag
 on:
   push:
     tags:
-      - 'feature.*'
+      - 'feature[0-9]{4}'
 jobs:
   build:
     runs-on: ubuntu-latest
