@@ -3,7 +3,7 @@ name: Android CI TAG
 on:
   push:
     tags:
-      - '*'
+      - 'AB-.*'
 jobs:
   build:
     runs-on: ubuntu-latest
