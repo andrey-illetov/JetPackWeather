@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - 'feature-[0-99999]+'
+env:
+  APP_PASS: ${{ secrets.APP_PASS }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,9 +21,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
 
       - name: Run all test
         run: ./gradlew test
@@ -37,4 +37,4 @@ jobs:
           path: app/build/outputs/apk/release/app-debug.apk
 
       - name: Show Build Info
-        run: echo "This job is ${{ job.status }} on ${{github.ref}} in ${{ github.repository }} with ${{runner.os}}"
+        run: echo "This job is ${{ env.APP_PASS }} on ${{github.ref}} in ${{ github.repository }} with ${{runner.os}}"
