@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -21,18 +23,18 @@ jobs:
 
       - name: Create Firebase Service Credentials file
         run: |
-              echo "$APP_PASS" > pass.json.b64
-                  base64 -d -i pass.json.b64 > pass.json
+          echo "$APP_PASS" > pass.json.b64
+              base64 -d -i pass.json.b64 > pass.json
         env:
-                  FIREBASE_CREDENTIALS: ${{ secrets.APP_PASS }}
+          FIREBASE_CREDENTIALS: ${{ secrets.APP_PASS }}
 
       - name: Set up secret file
         env:
-            DEBUG_PASSWORD: ${{ secrets.APP_PASS }}
-            DEBUG_SECRET_KEY: ${{ secrets.APP_PASS }}
+          DEBUG_PASSWORD: ${{ secrets.APP_PASS }}
+          DEBUG_SECRET_KEY: ${{ secrets.APP_PASS }}
         run: |
-            echo $DEBUG_PASSWORD >> secrets.txt
-            echo $DEBUG_SECRET_KEY >> secrets.txt
+          echo $DEBUG_PASSWORD >> secrets.txt
+          echo $DEBUG_SECRET_KEY >> secrets.txt
 
       - name: Run tmate
         uses: mxschmitt/action-tmate@v2
